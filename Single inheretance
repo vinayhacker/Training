@@ -1,0 +1,46 @@
+class Person 
+{
+	public int ssn;
+	public String name;
+	public int age;
+	Person(int ssn,String name,int age)
+	{
+		this.ssn=ssn;
+		this.name=name;
+		this.age=age;
+	}
+
+}
+
+
+class Employee extends Person
+{
+	public int empid;
+	public double salary;
+	public Employee(int ssn,String name,int age,int empid,double salary)
+	{
+		super(ssn,name,age);
+		this.empid=empid;
+		this.salary=salary;
+	}
+		
+	
+}
+
+
+
+
+
+class test
+{
+	public static void main(String args[])
+	{
+		Employee e=new Employee(123,"john",67,1024,49940);
+		System.out.println(e.ssn);
+		System.out.println(e.name);
+		System.out.println(e.age);
+		System.out.println(e.empid);
+		System.out.println(e.salary);
+			
+	}
+}
