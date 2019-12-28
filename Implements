@@ -1,0 +1,57 @@
+interface calculator
+{
+	void int sum(int x,int y);
+	void int product(int x ,int y);
+}
+
+
+class abc implements calculator
+{
+	public int sum(int x,int y)
+	{
+		this.x=x;
+		this.y=y;
+		return x+y;
+	}
+	public int product(int x,int y)
+	{
+		this.x=x;
+		this.y=y;
+		return x*y;
+	}
+}
+
+class xyz implements calculator
+{
+	public int product(int x,int y) 
+	{
+		this.x=x;
+		this.y=y;
+		return (x*y);
+	}
+	public int product(int x,int y)
+	{
+		this.x=x;
+		this.y=y;
+		return x*y;
+	}
+}
+
+
+
+class test
+{
+	public static void main(String args[])
+	{
+		abc s=new abc();  
+                s.sum(10,20);
+                s.product(20,30);
+                xyz m=new xyz();
+                m.sum(20,30);
+                m.product();
+		System.out.println(m.sum());
+		
+	}
+}
+
+	
