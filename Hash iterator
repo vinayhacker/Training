@@ -1,0 +1,22 @@
+import java.util.*;
+
+class test
+{
+	public static void main(String args[])
+	{
+		HashSet<Employee> h = new HashSet<Employee>();
+		h.add(new employee(101,"ajay",1000.00));
+		h.add(new employee(102,"chandu",3000.00));
+		h.add(new employee(102,"babu",40000.00));
+		h.add(new employee(301,"ajay",10000.00));
+		for(Employee e : h)
+		{
+			e.display();
+		}
+		Iterator<Employee> itr = h.iterator();
+		while(itr.hasNext())
+		{
+			itr.next().display();
+		}
+	}
+}
