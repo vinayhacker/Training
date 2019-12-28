@@ -1,0 +1,16 @@
+import java.util.Scanner;
+
+class MyClass {
+  public static void main(String[] args) {
+    try {
+      int myNumbers;
+      Scanner n=new Scanner(System.in);
+      myNumbers=n.nextInt();
+      System.out.println(myNumbers);
+    } catch (Exception e) {
+      System.out.println("should not enter string");
+    } finally {
+      System.out.println("The 'try catch' is finished.");
+    }
+  }
+}
