@@ -1,0 +1,88 @@
+class person
+{
+	public int aadhar;
+	public String name;
+	public int age;
+	
+	public person(int aadhar,String name,int age)
+	{
+		this.aadhar=aadhar;
+		this.name=name;
+		this.age=age;
+	}
+	
+}
+
+class student extends person
+{
+	public int sid;
+	public int m1;
+	public int m2;
+	public int m3;
+	
+	public student(int aadhar,String name,int age,int sid,int m1,int m2,int m3)
+	{
+		super(aadhar,name,age);
+		this.sid=sid;
+		this.m1=m1;
+		this.m2=m2;
+		this.m3=m3;
+	}
+	public int gettotalmarks()
+	{
+		return m1+m2+m3;
+	}	
+	public int getavg()
+	{
+		return (m1+m2+m3)/3;
+	}
+	public String getgrade()
+	{
+		if(gettotalmarks()>100)
+		{
+			return "pass";
+		}
+		return "fail";
+	}
+
+
+
+
+class pgstudent extends student
+{
+	public String electives;
+	public double sship;
+	
+	public pgstudent(int aadhar,String name,int age,int sid,int m1,int m2,int m3,String electives,double sship)
+	{
+		super(aadhar,name,age,sid,m1,m2,m3);
+		this.electives=electives;
+		this.sship=sship;
+	}	
+
+	
+}
+
+
+
+class test
+{
+	public void main(String args[])
+	{
+	pgstudent x = new pgstudent(291029,"john",38,12,12,32,45,"maths",34000);
+	System.out.println(x.aadhar);
+	System.out.println(x.name);
+	System.out.println(x.age);
+	System.out.println(x.sid);
+	System.out.println(x.m1);
+	System.out.println(x.m2);
+	System.out.println(x.m3);
+	System.out.println(x.electives);
+	System.out.println(x.sship);
+	System.out.println(x.gettotalmarks());
+	System.out.println(x.getavg());
+	System.out.println(x.getgrade());
+	}
+}
+
+}
