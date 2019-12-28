@@ -1,0 +1,70 @@
+class person
+{
+	public int aadhar;
+	public String name;
+	public int age;
+	
+	public person(int aadhar,String name,int age)
+	{
+		this.aadhar=aadhar;
+		this.name=name;
+		this.age=age;
+	}
+	
+}
+
+class employee extends person
+{
+	public int empid;
+	public double salary;
+
+	public employee(int aadhar,String name,int age,int empid,double salary)
+	{
+		super(aadhar,name,age);
+		this.empid=empid;
+		this.salary=salary;
+	}
+}
+
+
+class salesman extends employee
+{
+	public int points;
+	
+	public salesman(int aadhar,String name,int age,int empid,double salary,int points)
+	{
+		super(aadhar,name,age,empid,salary);
+		this.points=points;
+	} 
+	public double getincentives()
+	{
+		return points*100;
+	}
+	public double gettotalsalary()
+	{
+		return salary+points*100;
+	}
+}
+
+
+
+class test
+{
+	public static void main(String args[])
+	{
+		salesman salesman=new salesman(908890,"john",32,12,12909,400);
+		System.out.println(salesman.aadhar);
+		System.out.println(salesman.name);
+		System.out.println(salesman.age);
+		System.out.println(salesman.empid);
+		System.out.println(salesman.salary);
+		System.out.println(salesman.points);
+		System.out.println(salesman.getincentives());
+		System.out.println(salesman.gettotalsalary());
+		}
+}
+
+
+
+
+
