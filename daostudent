@@ -1,0 +1,248 @@
+package com.del.entity;
+import java.sql.Date;
+public class Student 
+{ 
+	int rno;
+	String name;
+	int age;
+	Date dob;
+	public Student() {}
+	public Student(int rno, String name, int age, Date dob) 
+	{
+		this.rno = rno;
+		this.name = name;
+		this.age = age;
+		this.dob = dob;
+	}
+	public int getRno() {
+		return rno;
+	}
+	public void setRno(int rno) {
+		this.rno = rno;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	public Date getDob() {
+		return dob;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
+	
+
+}
+
+
+package com.del.entity;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+public class StudentDAO 
+{
+	public boolean insertStudent(Student S)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("insert into student values(?,?,?,?)");
+			pst.setInt(1,S.getRno());
+			pst.setString(2, S.getName());
+			pst.setDouble(3,S.getAge());
+			pst.setDate(4,S.getDob());
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	}
+ 	public boolean modifyStudent(Student S)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("update employee set name=?,age=? where rno=? )");
+		    pst.setString(1, S.getName());
+			pst.setDouble(2,S.getAge());
+			pst.setInt(3,S.getRno());
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	}
+ 	public boolean removeEmployee(int rno)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("Oracle.jdbc.Driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("delete from Student where rno=?");
+			pst.setInt(1,rno);
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	} 	
+ 	public Student getStudent(int rno)
+	{
+ 		Student S = null; 
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("Oracle.jdbc.Driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("select * from Student where rno=?");
+		    pst.setInt(1,rno);
+		    rs = pst.executeQuery();
+			if(rs.next())
+				S = new Student(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDate(4));
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+		        if(rs!=null) rs.close();
+			    if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return S;
+	}
+ 	public ArrayList<Student> getStudent()
+	{
+ 		ArrayList<Student> elist = new ArrayList<Student>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("Oracle.jdbc.Driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("select * from Student ");
+		   	 rs = pst.executeQuery();
+			while(rs.next())
+				elist.add(new Student(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDate(4)));
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+		        if(rs!=null) rs.close();
+			    if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return elist;
+	}
+}
+
+package com.del.dao;
+import java.sql.Date;
+import com.del.entity.Student;
+import com.del.entity.StudentDAO;
+
+public class DBTest 
+{
+
+	public static void main(String[] args) 
+	{
+
+		Student s = new Student(1,"Geek manish",29,new Date(1990,10,12));
+		StudentDAO sdao = new StudentDAO();
+		if(sdao.insertStudent(s))
+			System.out.println("Stuent Inserted");
+		else
+			System.out.println("Insertion failed");
+	}
+
+}
