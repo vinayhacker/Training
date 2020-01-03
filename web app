@@ -1,0 +1,148 @@
+package com.del.first.servlet;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.GenericServlet;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebServlet;
+
+import com.del.first.dao.UsersDAO;
+import com.del.first.entity.Users;
+@WebServlet("/AuthenticateServlet")
+public class AuthenticateServlet extends GenericServlet
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public void service(ServletRequest request,ServletResponse response) throws IOException,ServletException
+	{
+		response.setContentType("text/html");
+		String username=request.getParameter("uid");
+		String password=request.getParameter("pwd");
+		Users u = new Users(username,password);
+		RequestDispatcher rd=null;
+		PrintWriter out = response.getWriter();
+		out.println("<h1><center>");
+		if(new UsersDAO().validateUser(u))
+			out.println("SUCCESSFULL");
+		else
+		{
+			out.println("AEVADRA AADU");
+			rd=request.getRequestDispatcher("login.html");
+			rd.include(request, response);
+		}
+		out.println("<center><h1>");	
+	}
+}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+
+<form action="AuthenticateServlet">
+	<table align=center width=70% bgcolor=green>
+		<tr>
+			<th>USERNAME</th>
+			<td><input type =text name = uid></td>
+		</tr>
+		
+		
+		<tr>
+			<th>PASSWORD</th>
+			<td><input type =password name = pwd></td>
+		</tr>
+			
+		
+		<tr>
+			<td><input type =submit value=Login></td>
+			<td><input type =reset value=cancel></td>
+		</tr>		
+	</table>
+	
+</form>		
+</body>
+</html>
+
+
+package com.del.first.entity;
+
+public class Users
+{
+		String username;
+		String password;
+		public Users()
+		{
+		}
+		public Users(String username,String password)
+		{
+			this.username=username;
+			this.password=password;
+		}
+		public String getUsername() {
+			return username;
+		}
+		public void setUsername(String username) {
+			this.username = username;
+		}
+		public String getPassword() {
+			return password;
+		}
+		public void setPassword(String password) {
+			this.password = password;
+		}
+}
+
+
+package com.del.first.dao;
+import java.sql.*;
+import com.del.first.entity.Users;
+public class UsersDAO 
+{
+		public boolean validateUser(Users u)
+		{
+			int count = 0;
+			Connection con = null;
+			PreparedStatement pst = null;
+			ResultSet rs = null;
+			String url = "jdbc:oracle:thin:@localhost:1521:orcl";
+			try
+			{
+				Class.forName("oracle.jdbc.driver.OracleDriver");
+				con = DriverManager.getConnection(url,"scott","tiger");
+				pst = con.prepareStatement("select * from users where username=? and password=?");
+				pst.setString(1,u.getUsername());
+				pst.setString(2,u.getPassword());
+				rs=pst.executeQuery();
+				if(rs.next()) count = 1;
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+			finally
+			{
+				try
+				{
+					if(rs!=null) rs.close();
+					if(pst!=null) pst.close();
+					if(con!=null) con.close();
+				}
+				catch(Exception ex)
+				{
+					ex.printStackTrace();
+				}
+			}
+			return count ==1;
+		}
+}
+
