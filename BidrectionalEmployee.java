@@ -1,15 +1,20 @@
-package com.spring.web.entity;
+package com.deloitte.secondmvn.hibthird.entity;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 @Entity
-public class Employee
+public class Employee 
 {
 	@Id
 	int empid;
 	String name;
 	double salary;
-	public Employee(){}
-	public Employee(int empid, String name, double salary)
+	@ManyToOne
+	@JoinColumn(name="deptno")
+	Department  dept;
+	public Employee() {}
+	public Employee(int empid, String name, double salary) 
 	{
 		this.empid = empid;
 		this.name = name;
@@ -33,6 +38,13 @@ public class Employee
 	public void setSalary(double salary) {
 		this.salary = salary;
 	}
+	public Department getDept() {
+		return dept;
+	}
+	public void setDept(Department dept) {
+		this.dept = dept;
+	}
+	
 	
 
 }

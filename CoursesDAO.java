@@ -1,10 +1,9 @@
-package com.webapp2;
-
+package com.del.test.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import com.webapp2.Courses;
+import com.del.test.entity.Courses;
 public class CoursesDAO 
 {
   public boolean insertCourses(Courses c)
@@ -53,10 +52,11 @@ public class CoursesDAO
 	  {
 		  Class.forName("oracle.jdbc.driver.OracleDriver");
 		  con = DriverManager.getConnection(url,"scott","tiger");
-		  pst = con.prepareStatement("update course_name=? course_duration=? course_fee=? where course_id=? ");
+		  pst = con.prepareStatement("update courses set course_name=?,course_duration=?,course_fee=? where course_id=? ");
 		  pst.setString(1, c.getCourse_name());
 		  pst.setInt(2, c.getCourse_duration());
 		  pst.setDouble(3, c.getCourse_fee());
+                  pst.setDouble(4, c.getCourse_id());
 		  count=pst.executeUpdate();
 	  }
 	  catch(Exception ex)
@@ -77,7 +77,7 @@ public class CoursesDAO
 		}
 		return count == 1;
 	}
- public boolean removeCourse(int course_id)
+ public boolean removeCourses(int course_id)
  {
 	 int count=0;
 	  Connection con = null;
@@ -109,7 +109,8 @@ public class CoursesDAO
 		}
 		return count == 1;
 	}
-	 public Courses getCourse(int course_id)
+	
+	public Courses getCourses(int course_id)
 	 {   
 		 Courses c = null;
 		 Connection con = null;
@@ -121,7 +122,7 @@ public class CoursesDAO
 			  Class.forName("oracle.jdbc.driver.OracleDriver");
 			  con = DriverManager.getConnection(url,"scott","tiger");
 			  pst=con.prepareStatement("select * from courses where course_id=?");
-			  pst.setInt(1, c.getCourse_id());
+			  pst.setInt(1,course_id);
 			  rs= pst.executeQuery();
 				if(rs.next())
 					c = new Courses(rs.getInt(1),rs.getString(2),rs.getInt(3),rs.getDouble(4));
