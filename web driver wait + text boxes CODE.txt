@@ -1,0 +1,30 @@
+EXAMPLE OF WebDriver wait
+
+WebDriverWait wait = new WebDriverWait(driver,20);
+WebElement element = wait
+.until(ExpectedConditions.visibilityofElementLocated(By.xpath));
+boolean status=element.isDisplayed();
+if(status){
+Syso("webdriver visible");
+
+}
+else { syso("not visible ") }
+driver.manage().window().maximize();
+=================================================================================================
+
+Text boxes
+value in test boxes is send through the sendkeys
+
+List<WebElements> totalTextboxes= driver.findElements();
+sysyo(totalTextboxes.size());
+=====================================================================================================
+
+
+
+1.accept uname and password in a file and give it yes or no for user
+2.write a program to validate the home page of opencart and when you try to click laptops, it'll display 2 dropdowns, capture
+ min value and max, display field list names.
+
+=====================================================================================================
+
+

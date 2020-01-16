@@ -1,0 +1,183 @@
+package com.webapp2;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import com.del.second.entity.Employee;
+public class CoursesDAO
+{
+	public boolean insertCourses(Courses c)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oraclbe.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("insert into courses values(?,?,?,?)");
+			pst.setInt(1,c.getCid());
+			pst.setString(2, c.getCname());
+			pst.setDouble(3,c.getCduration());
+			pst.setDate(4,c.getCfee());
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	}
+ 	public boolean modifyCourses1(Courses c)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("update courses set cname=?,cduration=? where cid=? ");
+		    pst.setString(1, c.getCname());
+			pst.setDouble(2,c.getCduration());
+			pst.setInt(3,c.getCid());
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	}
+ 	public boolean removeCourses(int cid)
+	{
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("delete from courses where cid=?");
+			pst.setInt(1,cid);
+			count = pst.executeUpdate();
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+				if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return count == 1;
+	} 	
+ 	public Employee getCourse(int Cid)
+	{
+ 		Course c = null; 
+		int count =0;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("select * from course where cid=?");
+		    pst.setInt(1,cid);
+		    rs = pst.executeQuery();
+			if(rs.next())
+				c = new Course(rs.getInt(1),rs.getString(2),rs.getDouble(3),rs.getDouble(4));
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+		        if(rs!=null) rs.close();
+			    if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return c;
+	}
+ 	public ArrayList<Courses> getCourses()
+	{
+ 		ArrayList<Courses> clist = new ArrayList<Courses>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		String url="jdbc:oracle:thin:@localhost:1521:orcl";
+		try
+		{
+			Class.forName("Oracle.jdbc.Driver.OracleDriver");
+			con = DriverManager.getConnection(url,"scott","tiger");
+			pst = con.prepareStatement("select * from courses");
+		   	 rs = pst.executeQuery();
+			while(rs.next())
+				clist.add(new Courses(rs.getInt(1),rs.getString(2),rs.getDouble(3),rs.getDouble(4)));
+		}
+		catch(Exception ex)
+		{
+			ex.printStackTrace();
+		}
+		finally
+		{
+			try
+			{
+		        if(rs!=null) rs.close();
+			    if(pst!=null) pst.close();
+				if(con!=null) con.close();
+			}
+			catch(Exception ex)
+			{
+				ex.printStackTrace();
+			}
+		}
+		return clist;
+	}
+}

@@ -1,0 +1,28 @@
+FRAMEWORKS CONISTS OF
+1. Interfaces: these are the abstract collections.
+2. Implementations : these are the concrete implementation classes of the interfaces.
+3. Algorithms : these are the methods which perform such as searching, sorting, etc.
+
+
+(MAPS are part ofcollection but not collections)
+
+
+
+
+1.Hashset
+2.LinkedHashSet
+3.TreeSet
+4.ArrayList
+5.LinkedList
+6.HashMap
+7.LinkedHashMap
+8.TreeMap
+9.Comparable
+10.Comparator
+
+
+
+
+//////////////////////////////////////////
+
+in java either predefined or user defined class is either directly or indirectly is a sub class of object class
